@@ -72,3 +72,55 @@ class Chevalier {
 
 //Selection des composants
 
+
+
+function createPlayerCard(playerData) {
+    
+    const playerDiv = document.createElement('div');
+    playerDiv.className = 'joeur1';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'joeur-content';
+
+    const playerName = document.createElement('h2');
+    playerName.className = 'playerName';
+    playerName.textContent = playerData.name;
+
+    const propertiesDiv = document.createElement('div');
+    propertiesDiv.className = 'playerProperties';
+
+    const forceP = document.createElement('p');
+    forceP.className = 'Force';
+    forceP.innerHTML = `💪 Force : <span class="stringt">${playerData.strength}</span>`;
+
+    const magicP = document.createElement('p');
+    magicP.className = 'magic';
+    magicP.innerHTML = `🪄 Magie : <span class="magic">${playerData.magic}</span>`;
+
+    const manaP = document.createElement('p');
+    manaP.className = 'Mana';
+    manaP.innerHTML = `🔮 Mana : <span class="Mana">${playerData.mana}</span>`;
+
+    const vieP = document.createElement('p');
+    vieP.className = 'Vie';
+    vieP.innerHTML = `❤️ Vie : <span class="vie">${playerData.life}</span>`;
+
+    const barP = document.createElement('p');
+    barP.className = 'bar';
+
+    propertiesDiv.append(forceP, magicP, manaP, vieP, barP);
+    contentDiv.append(playerName, propertiesDiv);
+    playerDiv.append(contentDiv);
+
+    document.getElementById('players').appendChild(playerDiv);
+}
+
+// Exemple d'utilisation
+const playerData = {
+    name: "Lancelot",
+    strength: 20,
+    magic: 15,
+    mana: 50,
+    life: 100
+};
+createPlayerCard(playerData);
