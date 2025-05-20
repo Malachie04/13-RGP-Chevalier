@@ -69,15 +69,15 @@ class Chevalier {
     }
 }
 
-
+//Variables globales
+let playerNumber=0;
+let message="";
 //Selection des composants
 
-
-
-function createPlayerCard(playerData) {
-    
+function createPlayerCard(playerData,playerNumber) {
     const playerDiv = document.createElement('div');
     playerDiv.className = 'joeur1';
+    playerDiv.classList.add(`playerID${playerNumber}`);
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'joeur-content';
@@ -115,12 +115,54 @@ function createPlayerCard(playerData) {
     document.getElementById('players').appendChild(playerDiv);
 }
 
+//Selection objects
+const bouttonAjouter=document.querySelector('.ajouterJoueur');
+const chevaliers = [];
+
+// console.log(bouttonAjouter);
 // Exemple d'utilisation
-const playerData = {
-    name: "Lancelot",
-    strength: 20,
-    magic: 15,
-    mana: 50,
-    life: 100
-};
-createPlayerCard(playerData);
+// const playerData = {
+//     name: "Lancelot",
+//     strength: 20,
+//     magic: 15,
+//     mana: 50,
+//     life: 100
+// };
+// createPlayerCard(playerData);
+
+bouttonAjouter.addEventListener('click', ()=> {
+
+    let [nomPayer,forcePayer,spellpowerPayer]=document.querySelectorAll('input');
+    // const selectedAttaquant=document.querySelector('.playerSelect');
+
+
+    playerNumber++;
+    if(playerNumber>2){
+        message="Vous avez atteint le nombre maximum de joueurs !";
+        return;
+    }
+
+    if(playerNumber==1){
+        message="Vous avez ajouté un joueur !";
+        chevaliers.push((new Chevalier(nomPayer.value, forcePayer.value, spellpowerPayer.value)));
+        const playerData = {
+        name: chevaliers[0].name,
+        strength: chevaliers[0].strength,
+        magic: chevaliers[0].magic,
+        mana: chevaliers[0].mana,
+        life: chevaliers[0].life
+        }
+        createPlayerCard(playerData,playerNumber);
+     }else if(playerNumber==2){
+        message="Vous avez ajouté un joueur !";
+        chevaliers.push((new Chevalier(nomPayer.value, forcePayer.value, spellpowerPayer.value)));
+        const playerData = {
+        name: chevaliers[1].name,
+        strength: chevaliers[1].strength,
+        magic: chevaliers[1].magic,
+        mana: chevaliers[1].mana,
+        life: chevaliers[1].life
+        }
+        createPlayerCard(playerData,playerNumber);
+    }   
+});

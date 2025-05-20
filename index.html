@@ -10,35 +10,43 @@
 </head>
 <body>
     <div class="wrapper">
-        <button type="button">Ajouter</button>
+        
         <div class="container">
-            
-           <div class="joeur1">
-            <div class="joeur-content">
-                <h2 class="playerName">Joueur</h2>
-                <div class="playerProperties">
-                    <p class="Force">💪 Force : <span class="stringt">20</span></p>
-                    <p class="magic">🪄 Magie : <span class="magic">20</span></p>
-                    <p class="Mana">🔮 Mana : <span class="Mana">20</span></p>
-                    <p class="Vie">❤️ Vie : <span class="vie">20</span></p>
-                    <p class="bar"></p>
-                </div>
-            </div>
-           </div>
-           <div class="joeur1">
-            <div class="joeur-content">
-                <h2 class="playerName">Joueur</h2>
-                <div class="playerProperties">
-                    <p class="Force">💪 Force : <span class="stringt">20</span></p>
-                    <p class="magic">🪄 Magie : <span class="magic">20</span></p>
-                    <p class="Mana">🔮 Mana : <span class="Mana">20</span></p>
-                    <p class="Vie">❤️ Vie : <span class="vie">20</span></p>
-                    <p class="bar"></p>
-                </div>
-            </div>
-           </div>
+            <div class="fields">
 
-           <div id="players"></div>
+                <div class="inputName">
+                    <label for="name">Nom du joueur</label>
+                    <input type="text" id="name" placeholder="Entrez le nom du joueur" required> 
+                </div>
+                <div class="inputName">
+                    <label for="name">Force</label>
+                    <input type="text" id="force" placeholder="Entrez la force du joueur" required> 
+                </div>
+                <div class="inputName">
+                    <label for="name">SpellPower</label>
+                    <input type="text" id="spellpower" placeholder="Entrez spellPower du joueur" required> 
+                </div>
+                <div class="addElement">
+                    <button type="button" class="ajouterJoueur">Ajouter</button>
+                </div>
+                <div class="event">
+                    <select class="playerSelect selectionner">
+                        <option value="">Selectionner attaquant</option>
+                    </select>
+                    <select class="oponentSelect selectionner">
+                        <option value="">Selectionner défenseur</option>
+                    </select>
+                    <select class="attackSelect selectionner">
+                        <option value="">Attaque à l'épée</option>
+                    </select>
+                </div>
+                <div class="launch">
+                    <button type="button" class="lancer">Lancer</button>
+                </div>
+            </div>
+            <div class="jouer-content">
+                <div id="players"></div>
+            </div>
         </div>
     </div>
 </body>
