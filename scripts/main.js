@@ -194,6 +194,18 @@ lancer.addEventListener('click', (event) => {
     let onGoingAttack = attacttype.options[selectedIndex].textContent;
 
 
+    if(onGoingAttack==='Attaque classique'){
+        afficherMessage(playingAttacker.attack(playingDefender));
+    }else{
+        afficherMessage(playingAttacker.magicAttack(playingDefender));
+        afficherMessage(playingDefender.getDamages(playingAttacker.strength));
+    }
+    
+
+
+
+
+
     console.log(onGoingAttack);
 
     console.log(playingAttacker);
@@ -298,19 +310,28 @@ function afficherMessage(message) {
     }, 2000);
 }
 
-//Selection element joueur
 
 
 //The rafrecher
 function rafresh(attacker, defender) {
+
+
+    //Selection element joueur
+    const Jvie1=document.querySelector('.playerID1 .Vie1 .vie');
+    const Jvie2=document.querySelector('.playerID2 .Vie2 .vie');
+
+
     // Met à jour les valeurs du joueur attaquant
+
     const mana1 = attacker.mana;
     const vie1 = attacker.life;
+    Jvie1.innerHTML = `${vie1}`;
     bar1.style.width = `${attacker.life}%`;
 
     // Met à jour les valeurs du joueur défenseur
     const mana2 = defender.mana;
     const vie2 = defender.life;
+    Jvie2.innerHTML = `${vie2}`;
     bar2.style.width = `${defender.life}%`;
 
     // Optionnel : afficher les valeurs
