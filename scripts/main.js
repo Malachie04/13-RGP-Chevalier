@@ -109,10 +109,15 @@ function createPlayerCard(playerData,playerNumber) {
     vieP.className = `Vie${playerNumber}`;
     vieP.innerHTML = `❤️ Vie : <span class="vie">${playerData.life}</span>`;
 
+    const divBar=document.createElement('div');
+    divBar.className='barDiv';
+
     const barP = document.createElement('p');
     barP.className = `bar${playerNumber}`;
 
-    propertiesDiv.append(forceP, magicP, manaP, vieP, barP);
+    divBar.append(barP);
+
+    propertiesDiv.append(forceP, magicP, manaP, vieP, divBar);
     contentDiv.append(playerName, propertiesDiv);
     playerDiv.append(contentDiv);
 
@@ -239,14 +244,14 @@ bouttonAjouter.addEventListener('click', (event)=> {
         //Creation CARD
         createPlayerCard(playerData,playerNumber);
         //Recupération element
-        mana1=document.querySelector('.playerID1 .mana1').textContent;
-        vie1=document.querySelector('.playerID1 .Vie1').textContent;
-        const bar1 = document.getElementsByClassName('bar1')[0];
+        mana1=document.querySelector('.playerID1 .Mana').textContent;
+        vie1=document.querySelector('.playerID1 .vie').textContent;
+        bar1=document.querySelector('.playerID1 .barDiv .bar1');
+        //Affectation vuie
+        bar1.width=`${vie1}%`;
 
         console.log(mana1);
-
-        console.log(bar1);
-        bar1.width=`100%`;
+        console.log(vie1);
         clearForm();
 
      }else if(playerNumber==2){
@@ -261,9 +266,15 @@ bouttonAjouter.addEventListener('click', (event)=> {
         }
         createPlayerCard(playerData,playerNumber);
         event.target.style.display="none";
-        mana2=document.getElementsByClassName('mana2').textContent;
-        vie2=document.getElementsByClassName('Vie2').textContent;
-        bar2=document.getElementsByClassName('bar2')[0];
+
+
+        mana2=document.querySelector('.playerID2 .Mana').textContent;
+        vie2=document.querySelector('.playerID2 .vie').textContent;
+        // document.getElementsByClassName('bar2')[0].width=`${vie2}%`;
+
+        bar2=document.querySelector('.playerID2 .barDiv .bar2');
+        //Affectation vuie
+        bar2.width=`${vie2}%`
         
         clearForm();
 

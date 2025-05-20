@@ -37,12 +37,20 @@ body{
     
 }
 
-.bar{
+.barDiv{
     width: 100%;
     padding: 10px 0;
     border-radius: 15px;
-    background:linear-gradient(to right, #ff6666, #cc0000, #660000);
+    // background:linear-gradient(to right, #ff6666, #cc0000, #660000);
     align-items: start;
+}
+
+.bar1,.bar2{
+    display: block;
+    border-radius: 15px;
+    height: 10px;
+    
+    background: linear-gradient(to right, #ff6666, #cc0000, #660000);
 }
 
 .field{
