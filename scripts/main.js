@@ -72,6 +72,10 @@ class Chevalier {
 //Variables globales
 let playerNumber=0;
 let message="";
+
+let mana1='',vie1='',bar1='';
+let mana2='',vie2='',bar2='';
+
 //Selection des composants
 
 function createPlayerCard(playerData,playerNumber) {
@@ -90,23 +94,23 @@ function createPlayerCard(playerData,playerNumber) {
     propertiesDiv.className = 'playerProperties';
 
     const forceP = document.createElement('p');
-    forceP.className = 'Force';
+    forceP.className = `Force${playerNumber}`;
     forceP.innerHTML = `💪 Force : <span class="stringt">${playerData.strength}</span>`;
 
     const magicP = document.createElement('p');
-    magicP.className = 'magic';
+    magicP.className = `magic${playerNumber}`;
     magicP.innerHTML = `🪄 Magie : <span class="magic">${playerData.magic}</span>`;
 
     const manaP = document.createElement('p');
-    manaP.className = 'Mana';
+    manaP.className = `Mana${playerNumber}`;
     manaP.innerHTML = `🔮 Mana : <span class="Mana">${playerData.mana}</span>`;
 
     const vieP = document.createElement('p');
-    vieP.className = 'Vie';
+    vieP.className = `Vie${playerNumber}`;
     vieP.innerHTML = `❤️ Vie : <span class="vie">${playerData.life}</span>`;
 
     const barP = document.createElement('p');
-    barP.className = 'bar';
+    barP.className = `bar${playerNumber}`;
 
     propertiesDiv.append(forceP, magicP, manaP, vieP, barP);
     contentDiv.append(playerName, propertiesDiv);
@@ -117,25 +121,105 @@ function createPlayerCard(playerData,playerNumber) {
 
 //Selection objects
 const bouttonAjouter=document.querySelector('.ajouterJoueur');
+const msgElement=document.querySelector('.message');
 const chevaliers = [];
+let [nomPayer,forcePayer,spellpowerPayer]=document.querySelectorAll('input');
+let [attaquant,defensuer,attacttype]=document.querySelectorAll('select');
+const lancer=document.querySelector('.lancer');
 
-// console.log(bouttonAjouter);
-// Exemple d'utilisation
-// const playerData = {
-//     name: "Lancelot",
-//     strength: 20,
-//     magic: 15,
-//     mana: 50,
-//     life: 100
-// };
-// createPlayerCard(playerData);
+let attaker1=0,defender1=0;
 
-bouttonAjouter.addEventListener('click', ()=> {
+// const playingAttacker='',playingdefender='';
 
-    let [nomPayer,forcePayer,spellpowerPayer]=document.querySelectorAll('input');
-    // const selectedAttaquant=document.querySelector('.playerSelect');
+console.log(attaquant.value,defensuer.value,attacttype.value);
+
+[forcePayer,spellpowerPayer].forEach((input) => {
+    input.addEventListener('input', (event) => {
+        if(isNaN(event.target.value)){
+            event.target.value = '';
+            event.target.style.borderColor = 'red';
+        }else {
+            event.target.style.borderColor = 'green';
+        }
+    });
+}
+);
+//Affectation des défenseurs et attaquants
+[attaquant, defensuer].forEach((select) => { 
+    select.addEventListener('change', (event) => {
+        let nameclasse = event.target.className;
+        
+        if (nameclasse.includes("playerSelect")) {
+            attaker1 = event.target.options[event.target.selectedIndex].textContent;
+        } else if (nameclasse.includes("oponentSelect")) {
+            defender1 = event.target.options[event.target.selectedIndex].textContent;
+        }
+
+        lancer.style.display = "none";
+        console.log("Attaquant :", attaker1);
+        console.log("Défenseur :", defender1);
+    });
+});
 
 
+//Affcetation des roles
+
+attacttype.addEventListener('change', (event) => {
+
+    if(attaquant.value === defensuer.value) {
+        event.target.style.borderColor = 'red';
+        message="Vous ne pouvez pas attaquer le même joueur !";
+        afficherMessage(message);
+        lancer.style.display="none";
+        return;  
+    }else{
+        lancer.style.display="block";
+    }
+
+
+    if (event.target.value === 'attaque') {
+        event.target.style.borderColor = 'green';
+    } else if (event.target.value === 'magie') {
+        event.target.style.borderColor = 'blue';
+    } else {
+        event.target.style.borderColor = '';
+    }
+});
+
+//Boutton lancer
+lancer.addEventListener('click', (event) => {
+    event.preventDefault();
+    
+    const playingAttacker = chevaliers.find(c => c.name === attaker1);
+    const playingDefender = chevaliers.find(c => c.name === defender1);
+
+
+    let selectedIndex = attacttype.selectedIndex;
+    let onGoingAttack = attacttype.options[selectedIndex].textContent;
+
+
+    console.log(onGoingAttack);
+
+    console.log(playingAttacker);
+    console.log(playingDefender);
+
+    console.log(playingAttacker.shout());
+    console.log(playingDefender.shout());
+    
+    rafresh(playingAttacker,playingDefender);
+
+ 
+});
+
+//Boutton ajouter
+bouttonAjouter.addEventListener('click', (event)=> {
+    event.preventDefault();
+    
+    if(nomPayer.value=="" || forcePayer.value=="" || spellpowerPayer.value==""){
+        nomPayer.focus();
+        return;
+    }
+    
     playerNumber++;
     if(playerNumber>2){
         message="Vous avez atteint le nombre maximum de joueurs !";
@@ -152,7 +236,19 @@ bouttonAjouter.addEventListener('click', ()=> {
         mana: chevaliers[0].mana,
         life: chevaliers[0].life
         }
+        //Creation CARD
         createPlayerCard(playerData,playerNumber);
+        //Recupération element
+        mana1=document.querySelector('.playerID1 .mana1').textContent;
+        vie1=document.querySelector('.playerID1 .Vie1').textContent;
+        const bar1 = document.getElementsByClassName('bar1')[0];
+
+        console.log(mana1);
+
+        console.log(bar1);
+        bar1.width=`100%`;
+        clearForm();
+
      }else if(playerNumber==2){
         message="Vous avez ajouté un joueur !";
         chevaliers.push((new Chevalier(nomPayer.value, forcePayer.value, spellpowerPayer.value)));
@@ -164,5 +260,55 @@ bouttonAjouter.addEventListener('click', ()=> {
         life: chevaliers[1].life
         }
         createPlayerCard(playerData,playerNumber);
+        event.target.style.display="none";
+        mana2=document.getElementsByClassName('mana2').textContent;
+        vie2=document.getElementsByClassName('Vie2').textContent;
+        bar2=document.getElementsByClassName('bar2')[0];
+        
+        clearForm();
+
+        chevaliers.forEach((chevalier, index) => {
+            const attaquer = document.createElement('option');
+            const defender = document.createElement('option');
+            attaquer.value = index;
+            defender.value = index;
+            attaquer.textContent = chevalier.name;
+            defender.textContent = chevalier.name;
+            attaquant.append(attaquer);
+            defensuer.append(defender);
+        });
+
     }   
 });
+
+//Vider le formulaire
+function clearForm() {
+    nomPayer.value = '';
+    forcePayer.value = '';
+    spellpowerPayer.value = '';
+    nomPayer.focus();
+}
+function afficherMessage(message) {
+    msgElement.textContent = message;
+    setTimeout(() => {
+        msgElement.textContent = '';
+    }, 2000);
+}
+
+//Selection element joueur
+
+function rafresh(attacker, defender) {
+    // Met à jour les valeurs du joueur attaquant
+    const mana1 = attacker.mana;
+    const vie1 = attacker.vie;
+    bar1.style.width = attacker.bar + "%";
+
+    // Met à jour les valeurs du joueur défenseur
+    const mana2 = defender.mana;
+    const vie2 = defender.vie;
+    bar2.style.width = defender.bar + "%";
+
+    // Optionnel : afficher les valeurs
+    console.log(`Attaquant - Mana: ${mana1}, Vie: ${vie1}`);
+    console.log(`Défenseur - Mana: ${mana2}, Vie: ${vie2}`);
+}

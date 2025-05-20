@@ -31,19 +31,22 @@
                 </div>
                 <div class="event">
                     <select class="playerSelect selectionner">
-                        <option value="">Selectionner attaquant</option>
+                        <option value="0" selected>Selectionner attaquant</option>
                     </select>
                     <select class="oponentSelect selectionner">
-                        <option value="">Selectionner défenseur</option>
+                        <option value="0" selected>Selectionner défenseur</option>
                     </select>
                     <select class="attackSelect selectionner">
-                        <option value="">Attaque à l'épée</option>
+                        <option value="0" selected>Type d'attaque</option>
+                        <option value="1">Attaque classique</option>
+                        <option value="2">Attaque magique</option>
                     </select>
                 </div>
                 <div class="launch">
                     <button type="button" class="lancer">Lancer</button>
                 </div>
             </div>
+            <div class="message"></div>
             <div class="jouer-content">
                 <div id="players"></div>
             </div>
