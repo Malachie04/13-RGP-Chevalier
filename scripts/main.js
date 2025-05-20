@@ -156,13 +156,12 @@ console.log(attaquant.value,defensuer.value,attacttype.value);
         
         if (nameclasse.includes("playerSelect")) {
             attaker1 = event.target.options[event.target.selectedIndex].textContent;
+             afficherMessage(`Je suis ${attaker1} l'attanquant 🔫`);
         } else if (nameclasse.includes("oponentSelect")) {
             defender1 = event.target.options[event.target.selectedIndex].textContent;
+            afficherMessage(`Je suis ${defender1} le défenseur💪`);
         }
-
         lancer.style.display = "none";
-        console.log("Attaquant :", attaker1);
-        console.log("Défenseur :", defender1);
     });
 });
 
@@ -181,14 +180,6 @@ attacttype.addEventListener('change', (event) => {
         lancer.style.display="block";
     }
 
-
-    if (event.target.value === 'attaque') {
-        event.target.style.borderColor = 'green';
-    } else if (event.target.value === 'magie') {
-        event.target.style.borderColor = 'blue';
-    } else {
-        event.target.style.borderColor = '';
-    }
 });
 
 //Boutton lancer
@@ -248,7 +239,7 @@ bouttonAjouter.addEventListener('click', (event)=> {
         vie1=document.querySelector('.playerID1 .vie').textContent;
         bar1=document.querySelector('.playerID1 .barDiv .bar1');
         //Affectation vuie
-        bar1.width=`${vie1}%`;
+        bar1.style.width=`${vie1}%`;
 
         console.log(mana1);
         console.log(vie1);
@@ -274,10 +265,11 @@ bouttonAjouter.addEventListener('click', (event)=> {
 
         bar2=document.querySelector('.playerID2 .barDiv .bar2');
         //Affectation vuie
-        bar2.width=`${vie2}%`
+        bar2.style.width=`${vie2}%`
         
         clearForm();
 
+        //Creation des options selects
         chevaliers.forEach((chevalier, index) => {
             const attaquer = document.createElement('option');
             const defender = document.createElement('option');
@@ -308,16 +300,18 @@ function afficherMessage(message) {
 
 //Selection element joueur
 
+
+//The rafrecher
 function rafresh(attacker, defender) {
     // Met à jour les valeurs du joueur attaquant
     const mana1 = attacker.mana;
-    const vie1 = attacker.vie;
-    bar1.style.width = attacker.bar + "%";
+    const vie1 = attacker.life;
+    bar1.style.width = `${attacker.life}%`;
 
     // Met à jour les valeurs du joueur défenseur
     const mana2 = defender.mana;
-    const vie2 = defender.vie;
-    bar2.style.width = defender.bar + "%";
+    const vie2 = defender.life;
+    bar2.style.width = `${defender.life}%`;
 
     // Optionnel : afficher les valeurs
     console.log(`Attaquant - Mana: ${mana1}, Vie: ${vie1}`);
